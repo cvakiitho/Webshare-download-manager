@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Webshare downloader</title>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <div class="col-md-6">
+        <form action="/search/" method="get">
+             <div class=".form-group-lg">
+                <input type="text" class="form-control " name="search"><br>
+             </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-default btn-lg" value="Download!">
+             </div>
+        </form>
+    <ul>
+        {% for i in DOWNLOADING %}
+            <li> {{i}} - {{DOWNLOADING[i] }} </li>
+        {% endfor %}
+    </ul>
+    <ul>
+        {% if DOWNLOADED %}
+        <p>Downloaded: </p>
+        {% for i in DOWNLOADED %}
+            <li>
+                {{i}} <a class="btn btn-warning" href="delete/{{i}}">Delete</button></a>
+            </li>
+        {% endfor %}
+        {% endif %}
+    </ul>
+    <a class="btn btn-default btn-lg" href="logout">Logout</button></a>
+    </div>
+</body>
+</html>
