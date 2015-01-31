@@ -45,14 +45,14 @@ def find_ident(search):
         size = int(child.find('./size').text)
         if size < config.SIZE and (name[-4:] == '.mkv' or name[-4:] == '.avi' or name[-4:] == '.mp4'):
             return {ident: name}
-    print "no video file found"
+    print "no video file found" # TODO share error to view
 
 
-def get_link(parm):
+def get_link(id_name_dict):
     global WST
     try:
-        ident = parm.keys()[0]
-        name = parm.values()[0]
+        ident = id_name_dict.keys()[0]
+        name = id_name_dict.values()[0]
     except AttributeError:
         print 'no ident error'
         return 'no ident'
