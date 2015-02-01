@@ -2,7 +2,7 @@
 __author__ = 'Tomas Hartmann'
 import threading
 import time
-from flask import render_template, request, redirect, url_for, session, send_from_directory
+from flask import render_template, request, redirect, url_for, session
 import config
 import webshare
 import files
