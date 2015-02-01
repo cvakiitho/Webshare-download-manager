@@ -1,0 +1,2 @@
+include appwebshare/tests/*
+include appwebshare/templates/*
