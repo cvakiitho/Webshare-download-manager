@@ -20,7 +20,7 @@ WST = ''
 def login_to_webshare():
     headers = {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
     url = 'https://webshare.cz/api/login/'
-    payload = {'username_or_email': config.NAME, 'password': config.PASSWORD, 'digest': config.DIGGEST}
+    payload = {'username_or_email': config.NAME, 'password': config.PASSWORD}
     r = requests.post(url, data=payload, headers=headers, verify=False)
     print r.text
     if r.status_code == 200:
