@@ -4,8 +4,8 @@ import fileinput
 import site
 
 
-if site.getsitepackages()[1][0] == '/':
-    path = site.getsitepackages()[1] + '/appwebshare/scripts/'
+if site.getsitepackages()[0][0] == '/':
+    path = site.getsitepackages()[0] + '/appwebshare/scripts/'
 else:
     path = site.getsitepackages()[1] + '\\appwebshare\\scripts\\'
 
