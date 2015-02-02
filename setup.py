@@ -19,7 +19,7 @@ setup(name='webshare-download-manager',
       include_package_data=True,
       entry_points = {
         'console_scripts': [
-            'config_server = appwebshare.scripts.config-script:config',
+            'config_server = appwebshare.scripts.configme:configme',
             'run_server = appwebshare.scripts.run:run'
         ]
       },
