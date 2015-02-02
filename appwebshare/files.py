@@ -1,8 +1,7 @@
 # -*- coding: UTF=8 -*-
 __author__ = 'Tomas Hartmann'
 import glob
-import config
-
+from appwebshare.scripts import config
 
 def get_file_list():
     without_dir = []

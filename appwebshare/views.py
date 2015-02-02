@@ -3,10 +3,10 @@ __author__ = 'Tomas Hartmann'
 import threading
 import time
 from flask import render_template, request, redirect, url_for, session
-import config
 import webshare
 import files
 import os
+from appwebshare.scripts import config
 from appwebshare import app
 
 

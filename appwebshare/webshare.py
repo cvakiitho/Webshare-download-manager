@@ -4,7 +4,7 @@ from cgi import escape
 from xml.etree import ElementTree
 import time
 import requests
-import config
+from appwebshare.scripts import config
 
 
 DOWNLOADING = {}
