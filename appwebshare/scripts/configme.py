@@ -10,7 +10,7 @@ else:
     path = site.getsitepackages()[1] + '\\appwebshare\\scripts\\'
 
 
-def configme():
+def main():
     name = 'NAME = \"' + raw_input('enter your webshare name') + '\"'
     password = 'PASSWORD = \"' + raw_input('enter your webshare password hash') + '\"'
     dir_files = 'DIR = \"' + raw_input('enter directory to store files') + '\"'
@@ -32,4 +32,5 @@ def configme():
             print line,
 
 
-configme()
+if __name__ == '__main__':
+    main()

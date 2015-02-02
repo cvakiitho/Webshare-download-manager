@@ -3,7 +3,7 @@ __author__ = 'Tomas Hartmann'
 from setuptools import setup, find_packages
 
 setup(name='webshare-download-manager',
-      version='0.1.6',
+      version='0.1.9',
       description='Download manager for webshare.cz site. Flask + requests.',
       url='https://github.com/cvakiitho/Webshare-download-manager',
       author='Tomas Hartmann',
@@ -19,8 +19,8 @@ setup(name='webshare-download-manager',
       include_package_data=True,
       entry_points = {
         'console_scripts': [
-            'config_server = appwebshare.scripts.configme:configme',
-            'run_server = appwebshare.scripts.run:run'
+            'config_server = appwebshare.scripts.configme:main',
+            'run_server = appwebshare.scripts.run:main'
         ]
       },
       package_data={

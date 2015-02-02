@@ -2,7 +2,9 @@
 _author__ = 'Tomas Hartmann'
 from appwebshare import app
 
-def run():
+def main():
     app.run(host='localhost', port=5000, debug=True)
 
-run()
+
+if __name__ == '__main__':
+    main()
