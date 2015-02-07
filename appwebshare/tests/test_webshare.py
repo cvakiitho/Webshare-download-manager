@@ -16,6 +16,14 @@ class WebshareApiTests(unittest.TestCase):
         if 'vip' not in webshare.get_link(webshare.find_ident('test')).keys()[0]:
              raise AssertionError('no vip link')
 
+    def test_linktwice(self):
+        #should not login second time it search link
+        if 'vip' not in webshare.get_link(webshare.find_ident('test')).keys()[0]:
+             raise AssertionError('no vip link')
+        if 'vip' not in webshare.get_link(webshare.find_ident('pan prstenu')).keys()[0]:
+             raise AssertionError('no vip link')
+
+
 
 class appwebshareViewTests(unittest.TestCase):
     # TODO add views tests. selenium?

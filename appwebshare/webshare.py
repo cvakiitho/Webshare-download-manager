@@ -58,10 +58,10 @@ def get_link(id_name_dict):
         return 'no ident'
     headers = {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
     url = 'https://webshare.cz/api/file_link/'
-    if WST[0] == '':
+    if not WST:
         print 'login calling'
-        WST[0] = login_to_webshare()
-    payload = {'ident': ident, 'wst': WST[0]}
+        WST.append(login_to_webshare())
+    payload = {'ident': ident, 'wst': WST[len(WST)-1]}
     r = requests.post(url, data=payload, headers=headers, verify=False)
     root = ElementTree.fromstring(r.content)
     return {root.find('link').text: name}
