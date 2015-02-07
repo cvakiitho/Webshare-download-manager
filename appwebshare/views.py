@@ -13,7 +13,7 @@ from appwebshare import app
 @app.route("/")
 def index():
     if 'username' in session:
-        return render_template('index.html', DOWNLOADING=webshare.DOWNLOADING, DOWNLOADED=files.get_file_list())
+        return render_template('index.html', VIP=webshare.VIP, DOWNLOADING=webshare.DOWNLOADING, DOWNLOADED=files.get_file_list())
     return redirect(url_for('login'))
 
 
@@ -51,14 +51,14 @@ def logout():
 
 @app.route("/search/", methods=['GET'])
 def search():
-    global WST
     if 'username' in session:
         search = request.args.get('search')
         if len(search) > 1:
             linknamedict = webshare.get_link(webshare.find_ident(search))
             link = linknamedict.keys()[0]
+            # TODO put vip check login to link function
             if link[:10] != 'http://vip':
-                WST = ''
+                webshare.WST = []
                 linknamedict = webshare.get_link(webshare.find_ident(search))
                 link = linknamedict.keys()[0]
                 webshare.DOWNLOADING['VIP'] = 'Not a VIP link, trying again'

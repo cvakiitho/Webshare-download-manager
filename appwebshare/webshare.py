@@ -9,10 +9,9 @@ from appwebshare.scripts import config
 
 DOWNLOADING = {}
 WST = []
-
+VIP = {}
 # TODO: docstring
 # TODO: idea :add size to overview,
-# TODO: idea :add stop button,
 # TODO: idea :check size left on disk before download,
 # TODO: idea :html5 video grid after download
 
@@ -24,9 +23,9 @@ def login_to_webshare():
     r = requests.post(url, data=payload, headers=headers, verify=False)
     print r.text
     if r.status_code == 200:
-        DOWNLOADING['VIP'] = 'OK'
+        VIP['vip'] = 'OK'
     else:
-        DOWNLOADING['VIP'] = 'NOT OK, status code: ' + str(r.status_code)
+        VIP['vip'] = 'NOT OK, status code: ' + str(r.status_code)
     root = ElementTree.fromstring(r.content)
     print root.find('token').text
     return root.find('token').text
@@ -82,7 +81,7 @@ def download(link, name):
             for chunk in r.iter_content(1024):
                 if dl and DOWNLOADING[name][1]:
                     del DOWNLOADING[name]
-                    del DOWNLOADING['VIP']
+                    del VIP['vip']
                     return 'download stopped'
                 dl += len(chunk)
                 if chunk:
@@ -91,4 +90,4 @@ def download(link, name):
                     speed = dl/(time.clock() - start)
                     DOWNLOADING[name][0] = str(int(speed/1000)) + 'KB/s' + '     ' + str(int(((int(total_length) - dl)/speed))) + 's left'
     del DOWNLOADING[name]
-    del DOWNLOADING['VIP']
+    del VIP['vip']
