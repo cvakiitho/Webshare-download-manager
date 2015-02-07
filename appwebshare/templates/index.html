@@ -26,7 +26,7 @@
         </form>
     <ul>
         {% for i in DOWNLOADING %}
-            <li> {{i}} - {{DOWNLOADING[i] }} </li>
+            <li> {{i}} - {{DOWNLOADING[i][0] }} <a class="btn btn-danger" href="stop/{{i}}">Stop</button></a> </li>
         {% endfor %}
     </ul>
     <ul>

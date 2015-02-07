@@ -73,3 +73,10 @@ def search():
 def delete_file(filename):
     os.remove(config.DIR + filename)
     return redirect(url_for('index'))
+
+
+@app.route('/stop/<filename>')
+def stop_file(filename):
+    print filename
+    webshare.DOWNLOADING[filename][1] = 1
+    return redirect(url_for('index'))

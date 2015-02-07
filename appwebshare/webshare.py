@@ -74,16 +74,21 @@ def download(link, name):
         r = requests.get(link, stream=True)
         total_length = r.headers.get('content-length')
         dl = 0
+        DOWNLOADING[name] = [0,0]
         if total_length is None:  # no content length header
             f.write(r.content)
             f.flush()
         else:
             for chunk in r.iter_content(1024):
+                if dl and DOWNLOADING[name][1]:
+                    del DOWNLOADING[name]
+                    del DOWNLOADING['VIP']
+                    return 'download stopped'
                 dl += len(chunk)
                 if chunk:
                     f.write(chunk)
                     f.flush()
                     speed = dl/(time.clock() - start)
-                    DOWNLOADING[name] = str(int(speed/1000)) + 'KB/s' + '     ' + str(int(((int(total_length) - dl)/speed))) + 's left'
+                    DOWNLOADING[name][0] = str(int(speed/1000)) + 'KB/s' + '     ' + str(int(((int(total_length) - dl)/speed))) + 's left'
     del DOWNLOADING[name]
     del DOWNLOADING['VIP']
