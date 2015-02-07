@@ -8,7 +8,7 @@ from appwebshare.scripts import config
 
 
 DOWNLOADING = {}
-WST = ''
+WST = []
 
 # TODO: docstring
 # TODO: idea :add size to overview,
@@ -20,7 +20,7 @@ WST = ''
 def login_to_webshare():
     headers = {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
     url = 'https://webshare.cz/api/login/'
-    payload = {'username_or_email': config.NAME, 'password': config.PASSWORD}
+    payload = {'username_or_email': config.NAME, 'password': config.PASSWORD, 'keep_logged_in': 1}
     r = requests.post(url, data=payload, headers=headers, verify=False)
     print r.text
     if r.status_code == 200:
@@ -58,10 +58,10 @@ def get_link(id_name_dict):
         return 'no ident'
     headers = {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
     url = 'https://webshare.cz/api/file_link/'
-    if not WST:
+    if WST[0] == '':
         print 'login calling'
-        WST = login_to_webshare()
-    payload = {'ident': ident, 'wst': WST}
+        WST[0] = login_to_webshare()
+    payload = {'ident': ident, 'wst': WST[0]}
     r = requests.post(url, data=payload, headers=headers, verify=False)
     root = ElementTree.fromstring(r.content)
     return {root.find('link').text: name}
@@ -76,6 +76,7 @@ def download(link, name):
         dl = 0
         if total_length is None:  # no content length header
             f.write(r.content)
+            f.flush()
         else:
             for chunk in r.iter_content(1024):
                 dl += len(chunk)
@@ -83,6 +84,6 @@ def download(link, name):
                     f.write(chunk)
                     f.flush()
                     speed = dl/(time.clock() - start)
-                    DOWNLOADING[name] = str(int(speed/1000)) + 'KB/s' + '  ' + str(int(((int(total_length) - dl)/speed))) + 's left'
+                    DOWNLOADING[name] = str(int(speed/1000)) + 'KB/s' + '     ' + str(int(((int(total_length) - dl)/speed))) + 's left'
     del DOWNLOADING[name]
     del DOWNLOADING['VIP']
