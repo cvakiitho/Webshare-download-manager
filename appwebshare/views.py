@@ -52,31 +52,39 @@ def logout():
 @app.route("/search/", methods=['GET'])
 def search():
     if 'username' in session:
-        search = request.args.get('search')
-        if len(search) > 1:
-            linknamedict = webshare.get_link(webshare.find_ident(search))
-            link = linknamedict.keys()[0]
-            # TODO put vip check login to link function
-            if link[:10] != 'http://vip':
-                webshare.WST = []
-                linknamedict = webshare.get_link(webshare.find_ident(search))
-                link = linknamedict.keys()[0]
-                webshare.VIP['vip'] = 'Not a VIP link, trying again'
-            name = linknamedict.values()[0]
-            download_thread = threading.Thread(target=webshare.download, args=(link, name))
-            download_thread.start()
+        search = str(request.args.get('search'))
+        return render_template('index.html', VIP=webshare.VIP, DOWNLOADING=webshare.DOWNLOADING, DOWNLOADED=files.get_file_list(), SEARCHED=webshare.search_files(search))
+    return redirect(url_for('login'))
+
+
+@app.route('/download/<fileid>')
+def download(fileid):
+    if 'username' in session:
+        link = webshare.get_link(fileid)
+        # TODO put vip check login to link function
+        # if link[:10] != 'http://vip':
+        #     webshare.WST = []
+        #     linknamedict = webshare.get_link(webshare.find_ident(search))
+        #     link = linknamedict.keys()[0]
+        #     webshare.VIP['vip'] = 'Not a VIP link, trying again'
+        print link
+        download_thread = threading.Thread(target=webshare.download, args=(link,))
+        download_thread.start()
         return redirect(url_for('index'))
     return redirect(url_for('login'))
 
 
 @app.route('/delete/<filename>')
 def delete_file(filename):
-    os.remove(config.DIR + filename)
-    return redirect(url_for('index'))
-
+    if 'username' in session:
+        os.remove(config.DIR + filename)
+        return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 @app.route('/stop/<filename>')
 def stop_file(filename):
-    print filename
-    webshare.DOWNLOADING[filename][1] = 1
-    return redirect(url_for('index'))
+    if 'username' in session:
+        print filename
+        webshare.DOWNLOADING[filename][1] = 1
+        return redirect(url_for('index'))
+    return redirect(url_for('login'))

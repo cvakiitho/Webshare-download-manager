@@ -3,11 +3,11 @@
 {% block content %}
 
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-1 col-md-offset-1">
         <!-- status of login -->
         {% if VIP %}
             {% if VIP['vip'] == 'OK' %}
-                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-ok "></span>
             {% else %}
                 <p>VIP STATUS: {{VIP['vip']}} </p>
             {% endif %}
@@ -27,6 +27,24 @@
         </form>
     </div>
 
+    <!-- list of search + Download button -->
+    <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+            <table class="table">
+                {% if SEARCHED %}
+                <th><b>Found: </b></th>
+                    {% for i in SEARCHED %}
+                        <tr>
+                            <td>{{SEARCHED[i][0]}}</td>
+                            <td>{{SEARCHED[i][1]}}</td>
+                            <td><a class="btn btn-danger" href="/download/{{i}}">Download</button></a> </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </table>
+        </div>
+
+    </div>
 
 
     <div class="row">
@@ -40,7 +58,7 @@
                         <tr>
                             <td>{{i}}</td>
                             <td>{{DOWNLOADING[i][0] }} </td>
-                            <td><a class="btn btn-danger" href="stop/{{i}}">Stop</button></a> </td>
+                            <td><a class="btn btn-danger" href="/stop/{{i}}">Stop</button></a> </td>
                         </tr>
                     {% endfor %}
                 {% endif %}
@@ -55,7 +73,7 @@
                 {% for i in DOWNLOADED %}
                     <tr>
                         <td>{{i}}</td>
-                        <td><a class="btn btn-warning" href="delete/{{i}}">Delete</button></a></td>
+                        <td><a class="btn btn-warning" href="/delete/{{i}}">Delete</button></a></td>
                     </tr>
                 {% endfor %}
                 {% endif %}

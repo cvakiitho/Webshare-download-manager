@@ -6,7 +6,6 @@ import time
 import requests
 from appwebshare.scripts import config
 
-
 DOWNLOADING = {}
 WST = []
 VIP = {}
@@ -31,46 +30,44 @@ def login_to_webshare():
     return root.find('token').text
 
 
-def find_ident(search):
+def search_files(search):
     headers = {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
     url = 'https://webshare.cz/api/search/'
     payload = {'what': escape(str(search)), 'category': '', 'sort': 'rating', 'offset': '0', 'limit': '25', 'wst': ''}
     r = requests.post(url, data=payload, headers=headers, verify=False)
     r.encoding = 'UTF-8'
     root = ElementTree.fromstring(r.content)
+    x = 0
+    searched = {}
     for child in root.findall('file'):
         ident = child.find('./ident').text
-        name = child.find('./name').text.encode('ascii', 'ignore')
-        size = int(child.find('./size').text)
-        if size < config.SIZE and (name[-4:] == '.mkv' or name[-4:] == '.avi' or name[-4:] == '.mp4'):
-            return {ident: name}
-    print "no video file found" # TODO share error to view
+        name = child.find('./name').text.encode('ascii', 'ignore') # TODO better encoding
+        size = int(int(child.find('./size').text)/1000000)
+        if 100 < size < config.SIZE and (name[-4:] == '.mkv' or name[-4:] == '.avi' or name[-4:] == '.mp4') and x < 8:
+            searched[ident] = name, str(size) + ' MBs'
+            x += 1
+    return searched
 
 
-def get_link(id_name_dict):
+def get_link(filedid):
     global WST
-    try:
-        ident = id_name_dict.keys()[0]
-        name = id_name_dict.values()[0]
-    except AttributeError:
-        print 'no ident error'
-        return 'no ident'
+
     headers = {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
     url = 'https://webshare.cz/api/file_link/'
     if not WST:
         print 'login calling'
         WST.append(login_to_webshare())
-    payload = {'ident': ident, 'wst': WST[len(WST)-1]}
+    payload = {'ident': filedid, 'wst': WST[len(WST)-1]}
     r = requests.post(url, data=payload, headers=headers, verify=False)
     root = ElementTree.fromstring(r.content)
-    return {root.find('link').text: name}
+    return root.find('link').text
 
 
-def download(link, name):
-    print link
+def download(link):
+    r = requests.get(link, stream=True)
+    name = r.headers.get('content-disposition')[21:]
     with open(config.DIR + name, 'wb') as f:
         start = time.clock()
-        r = requests.get(link, stream=True)
         total_length = r.headers.get('content-length')
         dl = 0
         DOWNLOADING[name] = [0,0]
