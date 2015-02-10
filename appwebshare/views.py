@@ -84,7 +84,7 @@ def delete_file(filename):
 @app.route('/stop/<filename>')
 def stop_file(filename):
     if 'username' in session:
-        print filename
-        webshare.DOWNLOADING[filename][1] = 1
+        if filename in webshare.DOWNLOADING:
+            webshare.DOWNLOADING[filename][1] = 1
         return redirect(url_for('index'))
     return redirect(url_for('login'))
