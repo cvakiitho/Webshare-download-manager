@@ -81,7 +81,6 @@ def download(link, name):
             for chunk in r.iter_content(1024):
                 if dl and DOWNLOADING[name][1]:
                     del DOWNLOADING[name]
-                    del VIP['vip']
                     return 'download stopped'
                 dl += len(chunk)
                 if chunk:
@@ -90,4 +89,3 @@ def download(link, name):
                     speed = dl/(time.clock() - start)
                     DOWNLOADING[name][0] = str(int(speed/1000)) + 'KB/s' + '     ' + str(int(((int(total_length) - dl)/speed))) + 's left'
     del DOWNLOADING[name]
-    del VIP['vip']

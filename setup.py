@@ -3,7 +3,7 @@ __author__ = 'Tomas Hartmann'
 from setuptools import setup, find_packages
 
 setup(name='webshare-download-manager',
-      version='0.2.2',
+      version='0.2.3',
       description='Download manager for webshare.cz site. Flask + requests.',
       url='https://github.com/cvakiitho/Webshare-download-manager',
       author='Tomas Hartmann',

@@ -61,7 +61,7 @@ def search():
                 webshare.WST = []
                 linknamedict = webshare.get_link(webshare.find_ident(search))
                 link = linknamedict.keys()[0]
-                webshare.DOWNLOADING['VIP'] = 'Not a VIP link, trying again'
+                webshare.VIP['vip'] = 'Not a VIP link, trying again'
             name = linknamedict.values()[0]
             download_thread = threading.Thread(target=webshare.download, args=(link, name))
             download_thread.start()
