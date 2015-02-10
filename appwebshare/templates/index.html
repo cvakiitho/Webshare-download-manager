@@ -3,8 +3,19 @@
 {% block content %}
 
     <div class="row">
+        <div class="col-md-2">
+        <!-- status of login -->
+        {% if VIP %}
+            {% if VIP['vip'] == 'OK' %}
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            {% else %}
+                <p>VIP STATUS: {{VIP['vip']}} </p>
+            {% endif %}
+        {% endif %}
+
+        </div>
         <form action="/search/" method="get">
-           <div class="col-md-6 col-md-offset-2">
+           <div class="col-md-8">
              <div class="form-group-lg">
                 <input type="text" class="form-control " name="search" placeholder="Search webshare.cz"><br>
              </div>
@@ -12,37 +23,43 @@
 
             <div class="col-md-2 form-group">
                 <input type="submit" class="btn btn-default btn-lg" value="Search">
-             </div>
+            </div>
         </form>
     </div>
-<!-- status of login -->
-        {% if VIP %}
-            <h3>VIP STATUS: </h3><p> {{VIP['vip']}} </p>
-        {% endif %}
 
-<!-- list of currently downloading files + stop button -->
+
+
     <div class="row">
+
+        <!-- list of currently downloading files + stop button -->
         <div class="col-md-6">
-            <ul>
+            <table class="table">
                 {% if DOWNLOADING %}
-                <h3>Downloading: </h3>
-                {% for i in DOWNLOADING %}
-                    <li> {{i}} - {{DOWNLOADING[i][0] }} <a class="btn btn-danger" href="stop/{{i}}">Stop</button></a> </li>
-                {% endfor %}
+                <th><b>Downloading: </b></th>
+                    {% for i in DOWNLOADING %}
+                        <tr>
+                            <td>{{i}}</td>
+                            <td>{{DOWNLOADING[i][0] }} </td>
+                            <td><a class="btn btn-danger" href="stop/{{i}}">Stop</button></a> </td>
+                        </tr>
+                    {% endfor %}
                 {% endif %}
-            </ul>
+            </table>
         </div>
+
+        <!-- list of downloaded files + delete button -->
         <div class="col-md-6">
-            <ul>
+            <table class="table">
                 {% if DOWNLOADED %}
-                <h3>Downloaded: </h3>
+                <th><b>Downloaded: </b><th>
                 {% for i in DOWNLOADED %}
-                    <li>
-                        {{i}} <a class="btn btn-warning" href="delete/{{i}}">Delete</button></a>
-                    </li>
+                    <tr>
+                        <td>{{i}}</td>
+                        <td><a class="btn btn-warning" href="delete/{{i}}">Delete</button></a></td>
+                    </tr>
                 {% endfor %}
                 {% endif %}
-            </ul>
+            </table>
         </div>
     </div>
 
