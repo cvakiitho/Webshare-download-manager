@@ -33,10 +33,10 @@
             {% for i in SEARCHED %}
             <div class="col-md-3">
                <table class="table">
-                    <th><b>{{SEARCHED[i][0]}}</b></th>
                         <tr><td><img src="{{SEARCHED[i][2]}}"></td></tr>
+                        <tr><td style="word-wrap: break-word; max-width: 150px;">{{SEARCHED[i][0]}}</td></th>
                         <tr><td>{{SEARCHED[i][1]}}</td></tr>
-                        <tr><td><a class="btn btn-danger" href="/download/{{i}}">Download</button></a> </td></tr>
+                        <tr><td><a class="btn btn-success" href="/download/{{i}}">Download</button></a> </td></tr>
                </table>
             </div>
            {% endfor %}
