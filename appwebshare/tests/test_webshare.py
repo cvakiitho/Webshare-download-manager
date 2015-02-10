@@ -10,17 +10,17 @@ class WebshareApiTests(unittest.TestCase):
         self.assertTrue(webshare.login_to_webshare())
 
     def test_search(self):
-        self.assertIsNotNone(webshare.find_ident('test'))
+        self.assertIsNotNone(webshare.search_files('test'))
 
     def test_link(self):
-        if 'vip' not in webshare.get_link(webshare.find_ident('test')).keys()[0]:
+        if 'vip' not in webshare.get_link(webshare.search_files('test')):
              raise AssertionError('no vip link')
 
     def test_linktwice(self):
         #should not login second time it search link
-        if 'vip' not in webshare.get_link(webshare.find_ident('test')).keys()[0]:
+        if 'vip' not in webshare.get_link(webshare.search_files('test')):
              raise AssertionError('no vip link')
-        if 'vip' not in webshare.get_link(webshare.find_ident('pan prstenu')).keys()[0]:
+        if 'vip' not in webshare.get_link(webshare.search_files('pan prstenu')):
              raise AssertionError('no vip link')
 
 

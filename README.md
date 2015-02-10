@@ -51,6 +51,6 @@ go to ([localhost:5000])
 ## Usage
 
 - login with username and password set via Config
--  enter what you want to download into search
--  First .avi / .mkv / .mp4 that is smaller then SIZE(4GB default - in config.py), ordered by popularity will start downloading
-
+- enter what you want to download into search
+- Pick what you want to download from a search results
+- First .avi / .mkv / .mp4 that is smaller then SIZE(4GB default - in config.py), and larger then 100MB will appear in search results

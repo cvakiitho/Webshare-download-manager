@@ -44,7 +44,8 @@ def search_files(search):
         name = child.find('./name').text.encode('ascii', 'ignore') # TODO better encoding
         size = int(int(child.find('./size').text)/1000000)
         if 100 < size < config.SIZE and (name[-4:] == '.mkv' or name[-4:] == '.avi' or name[-4:] == '.mp4') and x < 8:
-            searched[ident] = name, str(size) + ' MBs'
+            img = 'https://webshare.cz/' + child.find('./img').text
+            searched[ident] = name, str(size) + ' MBs', img
             x += 1
     return searched
 
