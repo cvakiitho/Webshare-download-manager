@@ -84,6 +84,6 @@ def download(link):
                 if chunk:
                     f.write(chunk)
                     f.flush()
-                    speed = dl/(time.clock() - start)
+                    speed = dl/(time.clock() + 1 - start)
                     DOWNLOADING[name][0] = str(int(speed/1000)) + 'KB/s' + '     ' + str(int(((int(total_length) - dl)/speed))) + 's left'
     del DOWNLOADING[name]
