@@ -43,8 +43,11 @@ def search_files(search):
         ident = child.find('./ident').text
         name = child.find('./name').text.encode('ascii', 'ignore') # TODO better encoding
         size = int(int(child.find('./size').text)/1000000)
-        if 100 < size < config.SIZE and (name[-4:] == '.mkv' or name[-4:] == '.avi' or name[-4:] == '.mp4') and x < 8:
-            img = 'https://webshare.cz/' + child.find('./img').text
+        if (name[-4] == ".") and x < 16:
+            if child.find('./img').text:
+                img = 'https://webshare.cz/' + child.find('./img').text
+            else:
+                img = 'http://st3.depositphotos.com/1007566/7734/v/170/depositphotos_77344800-404-error-page-design.jpg'
             searched[ident] = name, str(size) + ' MBs', img
             x += 1
     return searched
@@ -83,7 +86,6 @@ def download(link):
                 dl += len(chunk)
                 if chunk:
                     f.write(chunk)
-                    f.flush()
                     speed = dl/(time.clock() + 1 - start)
                     DOWNLOADING[name][0] = str(int(speed/1000)) + 'KB/s' + '     ' + str(int(((int(total_length) - dl)/speed))) + 's left'
     del DOWNLOADING[name]
