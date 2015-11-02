@@ -53,7 +53,7 @@ def logout():
 def search():
     if 'username' in session:
         search = str(request.args.get('search'))
-        return render_template('index.html', VIP=webshare.VIP, DOWNLOADING=webshare.DOWNLOADING, DOWNLOADED=files.get_file_list(), SEARCHED=webshare.search_files(search))
+        return render_template('index.html', VIP=webshare.VIP, DOWNLOADING=webshare.DOWNLOADING, DOWNLOADED=files.get_file_list(), SEARCHED=webshare.search_files(search), ORIG_SEARCH=search)
     return redirect(url_for('login'))
 
 
