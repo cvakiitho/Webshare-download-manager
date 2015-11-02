@@ -31,6 +31,9 @@
     {% if SEARCHED %}
     <div class="row well">
             {% for i in SEARCHED %}
+                {% if loop.index0 % 4 == 0 %}
+        <div class="row">
+                {% endif %}
             <div class="col-md-3">
                <table class="table">
                         <tr><td><img src="{{SEARCHED[i][2]}}"></td></tr>
@@ -39,6 +42,9 @@
                         <tr><td><a class="btn btn-success" href="/download/{{i}}">Download</button></a> </td></tr>
                </table>
             </div>
+                {% if loop.index0 % 4 == 3 %}
+        </div>
+                {% endif %}
            {% endfor %}
     </div>
     {% endif %}
