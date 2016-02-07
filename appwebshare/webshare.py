@@ -71,7 +71,6 @@ def download(link):
     r = requests.get(link, stream=True)
     name = r.headers.get('content-disposition')[21:]
     with open(config.DIR + name, 'wb') as f:
-        start = time.clock()
         total_length = r.headers.get('content-length')
         dl = 0
         DOWNLOADING[name] = [0,0]
@@ -79,6 +78,7 @@ def download(link):
             f.write(r.content)
             f.flush()
         else:
+            start = time.time()
             for chunk in r.iter_content(1024*32):
                 if dl and DOWNLOADING[name][1]:
                     del DOWNLOADING[name]
@@ -86,6 +86,6 @@ def download(link):
                 dl += len(chunk)
                 if chunk:
                     f.write(chunk)
-                    speed = dl/(time.clock() + 1 - start)
+                    speed = dl/(time.time() + 1 - start)
                     DOWNLOADING[name][0] = str(int(speed/1000000)) + 'MB/s' + '     ' + str(int(((int(total_length) - dl)/speed))) + 's left'
     del DOWNLOADING[name]
