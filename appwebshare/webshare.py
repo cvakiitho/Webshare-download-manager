@@ -79,7 +79,7 @@ def download(link):
             f.write(r.content)
             f.flush()
         else:
-            for chunk in r.iter_content(1024):
+            for chunk in r.iter_content(1024*32):
                 if dl and DOWNLOADING[name][1]:
                     del DOWNLOADING[name]
                     return 'download stopped'
@@ -87,5 +87,5 @@ def download(link):
                 if chunk:
                     f.write(chunk)
                     speed = dl/(time.clock() + 1 - start)
-                    DOWNLOADING[name][0] = str(int(speed/1000)) + 'KB/s' + '     ' + str(int(((int(total_length) - dl)/speed))) + 's left'
+                    DOWNLOADING[name][0] = str(int(speed/1000000)) + 'MB/s' + '     ' + str(int(((int(total_length) - dl)/speed))) + 's left'
     del DOWNLOADING[name]
